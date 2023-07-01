@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseApi", "CourseApi\CourseApi.csproj", "{E2997944-3E8A-4B31-9E8D-DC1806DE45F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course.Api", "Course.Api\Course.Api.csproj", "{E2997944-3E8A-4B31-9E8D-DC1806DE45F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCourseApi", "TestCourseApi\TestCourseApi.csproj", "{439CBDDE-C9D3-46A0-A7D0-DFDD67AB3BD2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course.Test", "Course.Test\Course.Test.csproj", "{439CBDDE-C9D3-46A0-A7D0-DFDD67AB3BD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
