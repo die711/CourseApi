@@ -9,24 +9,32 @@ namespace CourseApi.Repositories.Implementations;
 public class Repository<T> : IRepository<T> where T : class
 {
     private readonly ApplicationDbContext _db;
-    private readonly DbSet<T> _dbSet;
-    
+    protected readonly DbSet<T> dbSet;
+
     public Repository(ApplicationDbContext db)
     {
         _db = db;
-        _dbSet = _db.Set<T>();
+        dbSet = _db.Set<T>();
     }
 
     public async Task<List<T>> GetAll(Expression<Func<T, bool>>? filter = null, bool tracked = true,
         string? includeProperties = null)
     {
-        IQueryable<T> query = _dbSet;
+        IQueryable<T> query = dbSet;
 
         if (!tracked)
             query = query.AsNoTracking();
 
         if (filter != null)
             query = query.Where(filter);
+
+        if (includeProperties != null)
+        {
+            foreach (var property in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(property);
+            }
+        }
 
         return await query.ToListAsync();
     }
@@ -34,37 +42,52 @@ public class Repository<T> : IRepository<T> where T : class
     public PagedList<T> GetAllPagination(Params parameters, Expression<Func<T, bool>>? filter = null,
         string? includeProperties = null)
     {
-
-        IQueryable<T> query = _dbSet;
+        IQueryable<T> query = dbSet;
 
         if (filter != null)
             query = query.Where(filter);
-        
+
+        if (includeProperties != null)
+        {
+            foreach (var property in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(property);
+            }
+        }
+
         return PagedList<T>.ToPagedList(query, parameters.PageNumber, parameters.PageSize);
     }
 
     public async Task<T?> Get(Expression<Func<T, bool>>? filter = null, bool tracked = true,
         string? includeProperties = null)
     {
-        IQueryable<T> query = _dbSet;
+        IQueryable<T> query = dbSet;
 
         if (!tracked)
             query = query.AsNoTracking();
 
         if (filter != null)
             query = query.Where(filter);
+        
+        if (includeProperties != null)
+        {
+            foreach (var property in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(property);
+            }
+        }
 
         return await query.FirstOrDefaultAsync();
     }
 
     public async Task<T?> GetById(int id)
     {
-        return await _dbSet.FindAsync(id);
+        return await dbSet.FindAsync(id);
     }
 
     public async Task Create(T entity)
     {
-        await _dbSet.AddAsync(entity);
+        await dbSet.AddAsync(entity);
         await Save();
     }
 
@@ -80,7 +103,7 @@ public class Repository<T> : IRepository<T> where T : class
 
     public async Task Remove(T entity)
     {
-        _dbSet.Remove(entity);
+        dbSet.Remove(entity);
         await Save();
     }
 }
