@@ -1,3 +1,4 @@
+using CourseApi;
 using CourseApi.DataAccess;
 using CourseApi.Repositories.Implementations;
 using CourseApi.Repositories.Interfaces;
@@ -21,6 +22,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
+
+builder.Services.AddAutoMapper(typeof(MappingConfig));
 
 var app = builder.Build();
 

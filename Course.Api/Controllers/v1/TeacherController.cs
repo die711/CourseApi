@@ -18,10 +18,12 @@ public class TeacherController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<ApiResponse>> GetAll()
     {
-      //  var response = await _teacherService.ListAsync();
-        return StatusCode(200, null);
+        var response = await _teacherService.ListAsync();
+        return StatusCode((int)response.StatusCode, response);
     }
 
 }
