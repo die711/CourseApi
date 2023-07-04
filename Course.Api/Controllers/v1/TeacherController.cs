@@ -17,10 +17,11 @@ public class TeacherController : ControllerBase
         _teacherService = teacherService;
     }
 
+    [HttpGet]
     public async Task<ActionResult<ApiResponse>> GetAll()
     {
-        var response = await _teacherService.ListAsync();
-        return StatusCode((int)response.StatusCode, response);
+      //  var response = await _teacherService.ListAsync();
+        return StatusCode(200, null);
     }
 
 }
