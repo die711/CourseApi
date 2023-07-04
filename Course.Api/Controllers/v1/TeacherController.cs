@@ -83,6 +83,10 @@ public class TeacherController : ControllerBase
     }
 
     [HttpPatch("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<ActionResult<ApiResponse>> UpdatePartial(JsonPatchDocument<TeacherUpdateDto> patchDto, int id)
     {
         if (!ModelState.IsValid)

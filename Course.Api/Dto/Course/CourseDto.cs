@@ -1,12 +1,11 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using CourseApi.Dto.Teacher;
 
-namespace CourseApi.Entities;
+namespace CourseApi.Dto.Course;
 
-public class Course
+public class CourseDto
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Required]
     public int Id { get; set; }
     [Required]
     public int TeacherId { get; set; }
@@ -17,9 +16,6 @@ public class Course
     public double Ranking { get; set; }
     public double Price { get; set; }
     public DateTime LastUpdate { get; set; } = DateTime.Now;
-    public DateTime CreationDate { get; set; } = DateTime.Now;
-    public DateTime UpdateDate { get; set; } = DateTime.Now;
 
-    [ForeignKey("TeacherId")]
-    public Teacher Teacher { get; set; }
+    public TeacherDto Teacher { get; set; }
 }
