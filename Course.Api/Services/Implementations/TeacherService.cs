@@ -199,16 +199,9 @@ public class TeacherService : ITeacherService
 
         var teacherDto = _mapper.Map<TeacherUpdateDto>(teacher);
         
-        // patchDto.ApplyTo(teacherDto);
-        //
-        // teacher = _mapper.Map<Teacher>(teacherDto);
-
-
-
-
-        return null;
-
-
-
+         patchDto.ApplyTo(teacherDto);
+        
+        
+        return await UpdateAsync(teacherDto,id);
     }
 }

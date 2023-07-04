@@ -3,6 +3,7 @@ using CourseApi.Dto;
 using CourseApi.Dto.Teacher;
 using CourseApi.Repositories.Interfaces;
 using CourseApi.Services.Interfaces;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CourseApi.Controllers.v1;
@@ -80,4 +81,15 @@ public class TeacherController : ControllerBase
         var response = await _teacherService.RemoveAsync(id);
         return StatusCode((int)response.StatusCode, response);
     }
+
+    [HttpPatch("{id:int}")]
+    public async Task<ActionResult<ApiResponse>> UpdatePartial(JsonPatchDocument<TeacherUpdateDto> patchDto, int id)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var response = await _teacherService.UpdatePartialAsync(patchDto, id);
+        return StatusCode((int)response.StatusCode, response);
+    }
+    
 }
