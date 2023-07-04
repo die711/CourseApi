@@ -5,6 +5,8 @@ using CourseApi.Dto.Teacher;
 using CourseApi.Entities;
 using CourseApi.Repositories.Interfaces;
 using CourseApi.Services.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace CourseApi.Services.Implementations;
 
@@ -173,5 +175,40 @@ public class TeacherService : ITeacherService
         }
 
         return _response;
+    }
+
+    public async Task<ApiResponse> UpdatePartialAsync(JsonPatchDocument<TeacherUpdateDto> patchDto, int id)
+    {
+        if (id <= 0)
+        {
+            _response.ErrorMessage = "Id invalid";
+            _response.IsSucefull = false;
+            _response.StatusCode = HttpStatusCode.BadRequest;
+            return _response;
+        }
+
+        var teacher = await _teacherRepository.GetById(id);
+        
+        if (teacher == null)
+        {
+            _response.ErrorMessage = "Teacher is not found";
+            _response.IsSucefull = false;
+            _response.StatusCode = HttpStatusCode.NotFound;
+            return _response;
+        }
+
+        var teacherDto = _mapper.Map<TeacherUpdateDto>(teacher);
+        
+        // patchDto.ApplyTo(teacherDto);
+        //
+        // teacher = _mapper.Map<Teacher>(teacherDto);
+
+
+
+
+        return null;
+
+
+
     }
 }
