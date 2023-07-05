@@ -24,12 +24,12 @@ public class CourseService : ICourseService
         _logger = logger;
         _response = new();
     }
-    
+
     public async Task<ApiResponse> ListAsync()
     {
         try
         {
-            var courses = await _courseRepository.GetAll(tracked: false,includeProperties: "Teacher");
+            var courses = await _courseRepository.GetAll(tracked: false, includeProperties: "Teacher");
             _response.StatusCode = HttpStatusCode.OK;
             _response.Result = _mapper.Map<List<CourseDto>>(courses);
         }
@@ -54,9 +54,40 @@ public class CourseService : ICourseService
         throw new NotImplementedException();
     }
 
-    public Task<ApiResponse> FindByIdAsync(int id)
+    public async Task<ApiResponse> FindByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (id <= 0)
+            {
+                _response.ErrorMessage = "Invalidate id";
+                _response.IsSucefull = false;
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                return _response;
+            }
+
+            var course = await _courseRepository.GetById(id);
+
+            if (course == null)
+            {
+                _response.ErrorMessage = "Course not found";
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.IsSucefull = false;
+                return _response;
+            }
+
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.Result = _mapper.Map<CourseDto>(course);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            _response.StatusCode = HttpStatusCode.InternalServerError;
+            _response.IsSucefull = false;
+            _response.ErrorMessage = $"Error in get course with id: {id}";
+        }
+
+        return _response;
     }
 
     public Task<ApiResponse> CreateAsync(CourseCreateDto model)

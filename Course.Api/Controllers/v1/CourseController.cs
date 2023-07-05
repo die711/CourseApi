@@ -29,16 +29,16 @@ public class CourseController : ControllerBase
         return StatusCode((int)response.StatusCode, response);
     }
 
-    // [HttpGet("{id:int}")]
-    // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    // [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    // [ProducesResponseType(StatusCodes.Status404NotFound)]
-    // [ProducesResponseType(StatusCodes.Status200OK)]
-    // public async Task<ActionResult<ApiResponse>> FindById(int id)
-    // {
-    //     var response = await _teacherService.FindByIdAsync(id);
-    //     return StatusCode((int)response.StatusCode, response);
-    // }
+    [HttpGet("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<ApiResponse>> FindById(int id)
+    {
+        var response = await _courseService.FindByIdAsync(id);
+        return StatusCode((int)response.StatusCode, response);
+    }
     //
     // [HttpPost]
     // [ProducesResponseType(StatusCodes.Status400BadRequest)]
