@@ -18,11 +18,8 @@ public class MappingConfig : Profile
         CreateMap<Course, CourseCreateDto>().ReverseMap();
         CreateMap<Course, CourseUpdateDto>().ReverseMap();
 
-        CreateMap<Student,StudentDto>();
-        CreateMap<Student,StudentCreateDto>();
-        CreateMap<Student,StudentUpdateDto>();
-
-
+        CreateMap<Student, StudentDto>().ReverseMap();
+        CreateMap<Student, StudentCreateDto>().ReverseMap();
+        CreateMap<Student, StudentUpdateDto>().ReverseMap();
     }
-    
 }
