@@ -1,5 +1,6 @@
 using AutoMapper;
 using CourseApi.Dto.Course;
+using CourseApi.Dto.Student;
 using CourseApi.Dto.Teacher;
 using CourseApi.Entities;
 
@@ -16,6 +17,12 @@ public class MappingConfig : Profile
         CreateMap<Course, CourseDto>().ReverseMap();
         CreateMap<Course, CourseCreateDto>().ReverseMap();
         CreateMap<Course, CourseUpdateDto>().ReverseMap();
+
+        CreateMap<Student,StudentDto>();
+        CreateMap<Student,StudentCreateDto>();
+        CreateMap<Student,StudentUpdateDto>();
+
+
     }
     
 }

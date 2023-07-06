@@ -6,7 +6,7 @@ namespace CourseApi.Services.Interfaces;
 public interface IStudentService
 {
     Task<ApiResponse> ListAsync();
-    Task<ApiResponse> FindByAsync();
+    Task<ApiResponse> FindByAsync(int id);
     Task<ApiResponse> CreateAsync(StudentCreateDto model);
     Task<ApiResponse> UpdateAsync(StudentUpdateDto model);
     Task<ApiResponse> RemoveAsync(int id);
