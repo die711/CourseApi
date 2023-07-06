@@ -8,4 +8,5 @@ public class ApiResponse
     public bool IsSucefull { get; set; } = true;
     public object Result { get; set; }
     public string ErrorMessage { get; set; }
+    
 }
