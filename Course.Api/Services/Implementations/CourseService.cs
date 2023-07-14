@@ -40,7 +40,7 @@ public class CourseService : ICourseService
         {
             _logger.LogError(ex, ex.Message);
             _response.StatusCode = HttpStatusCode.InternalServerError;
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.ErrorMessage = "Error in all courses";
         }
 
@@ -60,7 +60,7 @@ public class CourseService : ICourseService
             {
                 _response.ErrorMessage = "Doesn't exist a teacher with that id";
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -72,7 +72,7 @@ public class CourseService : ICourseService
         {
             _logger.LogError(ex, ex.Message);
             _response.StatusCode = HttpStatusCode.InternalServerError;
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.ErrorMessage = "Error obtaining the courses";
         }
 
@@ -86,7 +86,7 @@ public class CourseService : ICourseService
             if (id <= 0)
             {
                 _response.ErrorMessage = "Id invalid";
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 return _response;
             }
@@ -97,7 +97,7 @@ public class CourseService : ICourseService
             {
                 _response.ErrorMessage = $"Course with id {id} not found";
                 _response.StatusCode = HttpStatusCode.NotFound;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -108,7 +108,7 @@ public class CourseService : ICourseService
         {
             _logger.LogError(ex, ex.Message);
             _response.StatusCode = HttpStatusCode.InternalServerError;
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.ErrorMessage = $"Error in get course with id: {id}";
         }
 
@@ -128,7 +128,7 @@ public class CourseService : ICourseService
         {
             _logger.LogError(ex, ex.Message);
             _response.StatusCode = HttpStatusCode.InternalServerError;
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.ErrorMessage = "Error creating the course";
         }
 
@@ -141,7 +141,7 @@ public class CourseService : ICourseService
         {
             if (id != model.Id)
             {
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.ErrorMessage = "Id invalid";
                 return _response;
@@ -153,7 +153,7 @@ public class CourseService : ICourseService
             {
                 _response.ErrorMessage = $"course with id {id} not found";
                 _response.StatusCode = HttpStatusCode.NotFound;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -173,7 +173,7 @@ public class CourseService : ICourseService
         {
             _logger.LogError(ex, ex.Message);
             _response.StatusCode = HttpStatusCode.InternalServerError;
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.ErrorMessage = "Error updating the course";
         }
 
@@ -189,7 +189,7 @@ public class CourseService : ICourseService
             {
                 _response.ErrorMessage = "Id invalid";
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -198,7 +198,7 @@ public class CourseService : ICourseService
             {
                 _response.ErrorMessage = $"course with id {id} not found";
                 _response.StatusCode = HttpStatusCode.NotFound;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -210,7 +210,7 @@ public class CourseService : ICourseService
         {
             _logger.LogError(ex, ex.Message);
             _response.StatusCode = HttpStatusCode.InternalServerError;
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.ErrorMessage = "Error deletiing the course";
         }
 
@@ -225,7 +225,7 @@ public class CourseService : ICourseService
             {
                 _response.ErrorMessage = "number need be mayor a zero";
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -237,7 +237,7 @@ public class CourseService : ICourseService
         {
             _logger.LogError(ex, ex.Message);
             _response.StatusCode = HttpStatusCode.InternalServerError;
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.ErrorMessage = "Error obtaining the courses";
         }
         

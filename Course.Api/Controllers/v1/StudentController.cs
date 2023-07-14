@@ -81,11 +81,19 @@ public class StudentController : ControllerBase
     {
         var response = await _studentService.RemoveAsync(id);
         return StatusCode((int)response.StatusCode, response);
-        
     }
-    
-    
-    
+
+    [HttpGet("Enroll/{studentId:int}/{courseId:int}")]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<ApiResponse>> Enroll(int studentId, int courseId)
+    {
+        var response = await _studentService.Enroll(studentId, courseId);
+        return StatusCode((int)response.StatusCode, response);
+    }
+
+
+
 
 
 }

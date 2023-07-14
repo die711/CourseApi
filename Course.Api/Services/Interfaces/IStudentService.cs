@@ -11,4 +11,6 @@ public interface IStudentService
     Task<ApiResponse> UpdateAsync(StudentUpdateDto model,int Id);
     Task<ApiResponse> RemoveAsync(int id);
 
+    Task<ApiResponse> Enroll(int studentId, int courseId);
+
 }

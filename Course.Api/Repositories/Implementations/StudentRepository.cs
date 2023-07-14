@@ -1,6 +1,7 @@
 using CourseApi.DataAccess;
 using CourseApi.Entities;
 using CourseApi.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace CourseApi.Repositories.Implementations;
 
@@ -10,8 +11,16 @@ public class StudentRepository : Repository<Student>, IStudentRepository
     {
     }
 
-    public Task Matricular(int studentId, int courseId)
+    public async Task Enroll(int studentId, int courseId)
     {
-        throw new NotImplementedException();
+        var studentCourse = new StudentCourse()
+        {
+            StudentId = studentId,
+            CourseId = courseId
+        };
+
+        await _db.StudentCourses.AddAsync(studentCourse);
+        await Save();
+
     }
 }

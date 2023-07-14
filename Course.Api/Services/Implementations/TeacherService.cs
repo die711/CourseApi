@@ -37,7 +37,7 @@ public class TeacherService : ITeacherService
         {
             _logger.LogError(ex, ex.Message);
             _response.StatusCode = HttpStatusCode.InternalServerError;
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.ErrorMessage = "Error in all teacher";
         }
 
@@ -52,7 +52,7 @@ public class TeacherService : ITeacherService
             {
                 _response.ErrorMessage = "Id incorrecto";
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -62,7 +62,7 @@ public class TeacherService : ITeacherService
             {
                 _response.ErrorMessage = "Teacher not found";
                 _response.StatusCode = HttpStatusCode.NotFound;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -73,7 +73,7 @@ public class TeacherService : ITeacherService
         {
             _logger.LogError(ex, ex.Message);
             _response.StatusCode = HttpStatusCode.InternalServerError;
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.ErrorMessage = "Error in obtain a teacher";
         }
 
@@ -93,7 +93,7 @@ public class TeacherService : ITeacherService
         {
             _logger.LogError(ex, ex.Message);
             _response.StatusCode = HttpStatusCode.InternalServerError;
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.ErrorMessage = "Error creating the teacher";
         }
 
@@ -106,7 +106,7 @@ public class TeacherService : ITeacherService
         {
             if (id != model.Id)
             {
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.ErrorMessage = "Id incorrect";
                 return _response;
@@ -118,7 +118,7 @@ public class TeacherService : ITeacherService
             {
                 _response.ErrorMessage = "Teacher don't found";
                 _response.StatusCode = HttpStatusCode.NotFound;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -134,7 +134,7 @@ public class TeacherService : ITeacherService
         {
             _logger.LogError(ex, ex.Message);
             _response.StatusCode = HttpStatusCode.InternalServerError;
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.ErrorMessage = "Error updating the teacher";
         }
 
@@ -149,7 +149,7 @@ public class TeacherService : ITeacherService
             {
                 _response.ErrorMessage = "Id incorrecto";
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -159,7 +159,7 @@ public class TeacherService : ITeacherService
             {
                 _response.ErrorMessage = "Teacher is not found";
                 _response.StatusCode = HttpStatusCode.NotFound;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -170,7 +170,7 @@ public class TeacherService : ITeacherService
         {
             _logger.LogError(ex, ex.Message);
             _response.StatusCode = HttpStatusCode.InternalServerError;
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.ErrorMessage = "Error removing teacher";
         }
 
@@ -182,7 +182,7 @@ public class TeacherService : ITeacherService
         if (id <= 0)
         {
             _response.ErrorMessage = "Id invalid";
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.StatusCode = HttpStatusCode.BadRequest;
             return _response;
         }
@@ -192,7 +192,7 @@ public class TeacherService : ITeacherService
         if (teacher == null)
         {
             _response.ErrorMessage = "Teacher is not found";
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.StatusCode = HttpStatusCode.NotFound;
             return _response;
         }

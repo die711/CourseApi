@@ -11,13 +11,16 @@ namespace CourseApi.Services.Implementations;
 public class StudentService : IStudentService
 {
     private readonly IStudentRepository _studentRepository;
+    private readonly ICourseRepository _courseRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<StudentService> _logger;
     protected ApiResponse _response;
 
-    public StudentService(IStudentRepository studentRepository, IMapper mapper, ILogger<StudentService> logger)
+    public StudentService(IStudentRepository studentRepository, ICourseRepository courseRepository, 
+        IMapper mapper, ILogger<StudentService> logger)
     {
         _studentRepository = studentRepository;
+        _courseRepository = courseRepository;
         _mapper = mapper;
         _logger = logger;
         _response = new();
@@ -38,7 +41,7 @@ public class StudentService : IStudentService
         {
            _logger.LogError(ex, ex.Message);
            _response.StatusCode = HttpStatusCode.InternalServerError;
-           _response.IsSucefull = false;
+           _response.IsSuccessful = false;
            _response.ErrorMessage = "Error getting students";
         }
 
@@ -53,7 +56,7 @@ public class StudentService : IStudentService
             {
                 _response.ErrorMessage = "Id invalid";
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -63,7 +66,7 @@ public class StudentService : IStudentService
             {
                 _response.ErrorMessage = "Student not found";
                 _response.StatusCode = HttpStatusCode.NotFound;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -75,7 +78,7 @@ public class StudentService : IStudentService
         {
             _logger.LogError(ex, ex.Message);
             _response.StatusCode = HttpStatusCode.InternalServerError;
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.ErrorMessage = "Error obtaining the student";
         }
 
@@ -95,7 +98,7 @@ public class StudentService : IStudentService
         {
             _logger.LogError(ex, ex.Message);
             _response.StatusCode = HttpStatusCode.InternalServerError;
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.ErrorMessage = "Error creating the student";
             
         }
@@ -110,13 +113,13 @@ public class StudentService : IStudentService
             {
                 _response.ErrorMessage = "Id invalid";
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
         
             if (id != model.Id)
             {
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.ErrorMessage = "Different Id";
                 return _response;
@@ -128,7 +131,7 @@ public class StudentService : IStudentService
             {
                 _response.ErrorMessage = "Student not found";
                 _response.StatusCode = HttpStatusCode.NotFound;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -145,7 +148,7 @@ public class StudentService : IStudentService
         {
           _logger.LogError(ex, ex.Message);
           _response.StatusCode = HttpStatusCode.InternalServerError;
-          _response.IsSucefull = false;
+          _response.IsSuccessful = false;
           _response.ErrorMessage = "Error updating a student";
         }
         return _response;
@@ -159,7 +162,7 @@ public class StudentService : IStudentService
             {
                 _response.ErrorMessage = "Id invalid";
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -169,7 +172,7 @@ public class StudentService : IStudentService
             {
                 _response.ErrorMessage = "Student not found";
                 _response.StatusCode = HttpStatusCode.NotFound;
-                _response.IsSucefull = false;
+                _response.IsSuccessful = false;
                 return _response;
             }
 
@@ -180,8 +183,48 @@ public class StudentService : IStudentService
         {
             _logger.LogError(ex,ex.Message);
             _response.StatusCode = HttpStatusCode.InternalServerError;
-            _response.IsSucefull = false;
+            _response.IsSuccessful = false;
             _response.ErrorMessage = "Error deleting a student";
+        }
+
+        return _response;
+    }
+
+    public async Task<ApiResponse> Enroll(int studentId, int courseId)
+    {
+        try
+        {
+            var student = await _studentRepository.GetById(studentId);
+
+            if (student == null)
+            {
+                _response.ErrorMessage = "Student not found";
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccessful = false;
+                return _response;
+            }
+
+            var course =await _courseRepository.GetById(courseId);
+            if (course == null)
+            {
+                _response.ErrorMessage = "Course not found";
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccessful = false;
+                return _response;
+            }
+
+            await _studentRepository.Enroll(studentId, courseId);
+            
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.Result = "Student enroll successful";
+
+        }
+        catch (Exception ex)
+        {
+           _logger.LogError(ex, ex.Message);
+           _response.StatusCode = HttpStatusCode.InternalServerError;
+           _response.IsSuccessful = false;
+           _response.ErrorMessage = "Error enrolling student";
         }
 
         return _response;
