@@ -29,6 +29,9 @@ builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 
+builder.Services.AddScoped<IStudentCourseRepository, StudentCourseRepository>();
+builder.Services.AddScoped<IStudentCourseService, StudentCourseService>();
+
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 
 var app = builder.Build();

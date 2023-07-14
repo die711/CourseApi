@@ -5,7 +5,7 @@ namespace CourseApi.Services.Interfaces;
 public interface IStudentCourseService
 {
 
-    Task<ApiResponse> CoursesForStudent(int studentId);
-    Task<ApiResponse> StudentForCourse(int courseId);
+    Task<ApiResponse> CoursesByStudent(int studentId);
+    Task<ApiResponse> StudentsByCourse(int courseId);
 
 }
