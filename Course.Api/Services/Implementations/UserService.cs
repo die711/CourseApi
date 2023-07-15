@@ -28,11 +28,11 @@ public class UserService : IUserService
     {
         try
         {
-            if (await _userRepository.isUniqueUser(model.UserName))
+            if (!await _userRepository.isUniqueUser(model.UserName))
             {
                 _response.IsSuccessful = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.ErrorMessage = "User is not found";
+                _response.ErrorMessage = "Username exists yet";
                 return _response;
             }
 
@@ -52,5 +52,36 @@ public class UserService : IUserService
         return _response;
     }
 
-    
+    public async Task<ApiResponse> Login(LoginRequestDto model)
+    {
+        try
+        {
+            var user = await _userRepository.Get(u =>
+                u.UserName.ToLower() == model.UserName.ToLower() && u.Password == model.Password);
+
+            if (user == null)
+            {
+
+                _response.ErrorMessage = "Username o password incorrect";
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccessful = false;
+
+                _response.Result = new LoginResponseDto()
+                {
+                };
+
+            }
+            
+            
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            _response.StatusCode = HttpStatusCode.InternalServerError;
+            _response.IsSuccessful = false;
+            _response.ErrorMessage = "Error int the login";
+        }
+
+        return _response;
+    }
 }

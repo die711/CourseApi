@@ -16,6 +16,9 @@ public class StudentCourseController : ControllerBase
     }
 
     [HttpGet("/course/{studentId:int}")]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<ApiResponse>> GetCoursesByStudent(int studentId)
     {
         var response = await _studentCourseService.CoursesByStudent(studentId);
@@ -23,6 +26,9 @@ public class StudentCourseController : ControllerBase
     }
 
     [HttpGet("/student/{courseId:int}")]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<ApiResponse>> GetStudentsByCourse(int courseId)
     {
         var response = await _studentCourseService.StudentsByCourse(courseId);

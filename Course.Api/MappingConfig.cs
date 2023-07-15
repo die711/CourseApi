@@ -24,6 +24,7 @@ public class MappingConfig : Profile
         CreateMap<Student, StudentUpdateDto>().ReverseMap();
 
         CreateMap<User, RegisterRequestDto>().ReverseMap();
+        CreateMap<User, UserDto>().ReverseMap();
 
     }
 }
