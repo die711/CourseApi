@@ -7,6 +7,7 @@ using CourseApi.Services;
 using CourseApi.Services.Implementations;
 using CourseApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -22,8 +23,8 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "Ingresar Bearer [space] tuToken \r\n\r\n " +
-                      "Ejemplo: Bearer 123456abcder",
+        Description = "Type Bearer [space] tuToken \r\n\r\n " +
+                      "Example: Bearer 123456abcder",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Scheme = "Bearer"
@@ -45,6 +46,22 @@ builder.Services.AddSwaggerGen(options =>
             },
             new List<string>()
         }
+    });
+    
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "MagicVilla API v1",
+        Description = "Api para villas"
+        ,
+        Version = "v1"
+    });
+
+    options.SwaggerDoc("v2", new OpenApiInfo
+    {
+        Title = "MagicVilla API v2",
+        Description = "Api para villas"
+        ,
+        Version = "v1"
     });
     
 });
@@ -91,6 +108,18 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+});
+
+builder.Services.AddVersionedApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
 
 var app = builder.Build();
 
@@ -98,7 +127,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json","MagicVilla API_v1");
+        options.SwaggerEndpoint("/swagger/v2/swagger.json","MagicVilla API_v2");
+    });
 }
 
 app.UseHttpsRedirection();

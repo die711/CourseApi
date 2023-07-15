@@ -1,5 +1,6 @@
 using System.Net;
 using CourseApi.Dto;
+using CourseApi.Dto.Specifications;
 using CourseApi.Dto.Teacher;
 using CourseApi.Repositories.Interfaces;
 using CourseApi.Services.Interfaces;
@@ -8,8 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CourseApi.Controllers.v1;
 
-[Route("api/[controller]")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
+[ApiVersion("1.0")]
 public class TeacherController : ControllerBase
 {
     private readonly ITeacherService _teacherService;
@@ -28,9 +30,13 @@ public class TeacherController : ControllerBase
         var response = await _teacherService.ListAsync();
         return StatusCode((int)response.StatusCode, response);
     }
-    
+
     [HttpGet("Pagination")]
-    
+    public async Task<ActionResult<ApiResponse>> GetPagination([FromQuery] Params parameters)
+    {
+        var response = await _teacherService.GetAllPagination(parameters);
+        return StatusCode((int)response.StatusCode, response);
+    }
 
     [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
