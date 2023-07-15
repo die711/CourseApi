@@ -2,6 +2,7 @@ using CourseApi;
 using CourseApi.DataAccess;
 using CourseApi.Repositories.Implementations;
 using CourseApi.Repositories.Interfaces;
+using CourseApi.Services;
 using CourseApi.Services.Implementations;
 using CourseApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,9 @@ builder.Services.AddScoped<IStudentService, StudentService>();
 
 builder.Services.AddScoped<IStudentCourseRepository, StudentCourseRepository>();
 builder.Services.AddScoped<IStudentCourseService, StudentCourseService>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 
