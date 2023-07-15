@@ -28,6 +28,9 @@ public class TeacherController : ControllerBase
         var response = await _teacherService.ListAsync();
         return StatusCode((int)response.StatusCode, response);
     }
+    
+    [HttpGet("Pagination")]
+    
 
     [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

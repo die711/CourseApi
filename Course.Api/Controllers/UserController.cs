@@ -18,6 +18,9 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("Register")]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<ApiResponse>> Register([FromBody] RegisterRequestDto dto)
     {
         if (!ModelState.IsValid)
@@ -26,8 +29,17 @@ public class UserController : ControllerBase
         var response = await _userService.Register(dto);
         return StatusCode((int)response.StatusCode, response);
     }
+
     
-    
+    [HttpPost("Login")]
+    public async Task<ActionResult<ApiResponse>> Login([FromBody] LoginRequestDto dto)
+    {
+        var response = await _userService.Login(dto);
+        return StatusCode((int)response.StatusCode, response);
+    }
+
+
+
 
 
 

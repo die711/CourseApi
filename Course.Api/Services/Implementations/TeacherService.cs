@@ -1,6 +1,7 @@
 using System.Net;
 using AutoMapper;
 using CourseApi.Dto;
+using CourseApi.Dto.Specifications;
 using CourseApi.Dto.Teacher;
 using CourseApi.Entities;
 using CourseApi.Repositories.Interfaces;
@@ -39,6 +40,26 @@ public class TeacherService : ITeacherService
             _response.StatusCode = HttpStatusCode.InternalServerError;
             _response.IsSuccessful = false;
             _response.ErrorMessage = "Error in all teacher";
+        }
+
+        return _response;
+    }
+
+    public async Task<ApiResponse> GetAllPagination(Params parameters)
+    {
+        try
+        {
+            var teachers =  _teacherRepository.GetAllPagination(parameters);
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.Result = _mapper.Map<List<TeacherDto>>(teachers);
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            _response.StatusCode = HttpStatusCode.InternalServerError;
+            _response.IsSuccessful = false;
+            _response.ErrorMessage = "Error getting the courses";
         }
 
         return _response;

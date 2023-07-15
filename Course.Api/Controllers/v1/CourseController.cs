@@ -4,6 +4,7 @@ using CourseApi.Dto.Course;
 using CourseApi.Dto.Teacher;
 using CourseApi.Repositories.Interfaces;
 using CourseApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,9 @@ public class CourseController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "admin")]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<ApiResponse>> GetAll()
